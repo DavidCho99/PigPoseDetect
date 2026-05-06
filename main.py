@@ -26,8 +26,8 @@ T = transforms.Compose([
         std=[0.229, 0.224, 0.225]
     )
 ])
-print(f"      - Normalization: ImageNet Defaults")
-print(f"      - Resize Dimensions: 224x224")
+print(f"Normalization: ImageNet Defaults")
+print(f"Resize Dimensions: 224x224")
 
 
 # From the dataset.py
@@ -35,7 +35,7 @@ print("[2/7] Loading PigPostureDataset...")
 dataset = PigPostureDataset(
     csv_file='data/csv/train.csv', img_dir='./data/images/train_processed_images', transform=T)
 total_count = len(dataset)
-print(f"      - Total images found in CSV: {total_count}")
+print(f"Total images found in CSV: {total_count}")
 
 # 3. Data Splitting
 print("[3/7] Splitting dataset into Train (80%) and Validation (20%)...")
@@ -51,8 +51,8 @@ train_loader = DataLoader(trainset, batch_size=64, shuffle=True)
 # We don't have to update the weights so choose the batch_size = 512.
 val_loader = DataLoader(valset, batch_size=512)
 
-print(f"      - Train Loader: {len(train_loader)} batches (BS=64)")
-print(f"      - Val   Loader: {len(val_loader)} batches (BS=512)")
+print(f"Train Loader: {len(train_loader)} batches (BS=64)")
+print(f"Val   Loader: {len(val_loader)} batches (BS=512)")
 
 # Build and train the model.
 print("[5/7] Building PigPosture_CNN Architecture...")

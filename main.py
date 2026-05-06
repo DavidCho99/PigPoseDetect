@@ -3,7 +3,24 @@ from torch.utils.data import DataLoader, random_split
 from torchvision import transforms
 import os
 import time
+'''
+# Build DataLoaders for MNIST train, validate, and test sets.
+T = transforms.ToTensor()
+fulltrain = datasets.MNIST('./data', train=True, transform=T, download=True)
+# Partition the full training set into a (trainset,valset) pair.
+train_size = int(len(fulltrain) * 0.8)
+val_size   = len(fulltrain) - train_size
+gen = torch.Generator().manual_seed(1) # For reproducability.
+trainset, valset = random_split(fulltrain, [train_size, val_size], generator=gen)
 
+train_loader = DataLoader(trainset, batch_size=64, shuffle=True)
+val_loader   = DataLoader(valset, batch_size=512)
+
+
+# Build and train the model.
+model = MNIST_CNN()
+results = train_model(model, patience=5, min_epochs=10, max_epochs=100)
+'''
 # Load the scr modules.
 from src.dataset import PigPostureDataset
 from src.model import PigPosture_CNN

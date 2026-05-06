@@ -1,0 +1,5 @@
+Lateral_lying_left
+Lateral_lying_right
+Sitting
+Standing
+Sternal_lying

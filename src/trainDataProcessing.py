@@ -2,6 +2,7 @@ import pandas as pd
 import cv2
 import ast
 import os
+# https://opencv.org/cropping-an-image-using-opencv/
 
 df = pd.read_csv('train.csv')
 

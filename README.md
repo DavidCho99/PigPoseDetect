@@ -1,41 +1,51 @@
 # Pig Posture Classification Source Code Organization
 This document outlines the project structure and provides a high-level overview of the implementation for the Pig Posture Classification project. The model correctly classified approximately 85% of the test images on approximately 30% of the test data. The final results will be based on the other 70%, so the final standings may be different.
 
+
+## 1. Model Architecture & Pipeline
+1. Model Architecture & Pipeline
+The architecture follows a VGG-inspired "funnel" design, increasing in depth to capture complex spatial features.
+
+### Convolutional Neural Network (CNN)
+
+* Feature Extraction: The model utilizes a sequential structure: 
+    `32 → MaxPool → 64 → MaxPool → 128 → MaxPool → 256 → MaxPool → 512 → MaxPool.`
+
+* Feature Hierarchy: Earlier layers learn simple patterns like edges, while deeper layers capture complex shapes.
+
+* Fixed Resolution: nn.AdaptiveAvgPool2d((7, 7)) is used to produce a consistent feature map for the classifier regardless of input variation.
+
+### Classifier Logic
+
+* Linear Projection: A hidden layer with 512 neurons (optimized as a power of 2 for GPU efficiency).
+
+* Regularization: Applied Dropout (p=0.5) to prevent overfitting on the training set.
+
+* Output Layer: A final linear layer with 5 outputs corresponding to the specific posture classes.
+
 ## 1. Project Structure Overview
 
 The project is divided into several logical directories to separate raw data, processing scripts, core source code, and training outputs.
 
 `data/`: Contains raw datasets and processed images.
 
-`train_images/`: Raw training images.
+* `train_images/ & test_images/`: Raw input data.
 
-`test_images/`: Raw test images.
+* `train_processed_images/ & test_processed_images/`: Images cropped based on bounding boxes.
 
-`train_processed_images/`: Images cropped based on bounding boxes for training.
+* `csv/`: Metadata and annotation files (e.g., train.csv, sample_submission.csv).
 
-`test_processed_images/`: Images cropped based on bounding boxes for inference.
+`src/`: Core implementation modules.
 
-`csv/`: Metadata and annotation files (e.g., train.csv, sample_submission.csv).
+* `dataset.py`: PyTorch Dataset definitions handling PIL loading and RGB conversion.
 
-`src/`: Core implementation logic.
+* `model.py`: CNN architecture, training epoch logic, and weight initialization.
 
-`dataset.py`: PyTorch Dataset definitions.
+* `train.py`: Training loops featuring an "Early Restoration" strategy.
+ 
+* `visualize.py`: Tools for plotting accuracy/loss and error distributions.
 
-`model.py`: Neural network architecture and layer configurations.
-
-`train.py`: Training loops and early stopping logic.
-
-`visualize.py`: Performance plotting and error analysis tools.
-
-`outputs/`: Directory for saved model weights (.pth) and performance visualizations (.png).
-
-root:
-
-`main.py`: The entry point for the training pipeline.
-
-`predict.py`: Script for generating final submission predictions.
-
-`trainDataProcessing.py / testDataProcessing.py`: Scripts to prepare the raw data.
+`outputs/`: Storage for saved model weights (.pth) and visualization plots (.png).
 
 ## 2. Folder & File Details
 
@@ -96,7 +106,7 @@ Execution Entry Points
 * Training Time: 45m 42.57s
 * Final Submission Score on Kaggle: 0.851
 * 
-### 4. Learning Curves
+#### Learning Curves
 The plots below illustrate the changes in Loss and Accuracy over the training epochs.
 
 The blue shaded area represents a 95% confidence interval estimate for the true accuracy.
@@ -105,7 +115,7 @@ The green dots indicate the performance at the best epoch before early stopping 
 
 ![Training Result Plot](data/outputs//training_result_plot.png)
 
-### 3. Error Analysis (by Class)
+#### Error Analysis (by Class)
 The following bar chart displays the distribution of Correct vs. Wrong predictions for each of the 5 pig posture classes within the validation set.
 
 Green Bars: Total number of correctly identified instances per class.

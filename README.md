@@ -1,7 +1,7 @@
 # Pig Posture Classification Source Code Organization
 This document outlines the project structure and provides a high-level overview of the implementation for the Pig Posture Classification project. The model correctly classified approximately 85% of the test images on approximately 30% of the test data. The final results will be based on the other 70%, so the final standings may be different.
 
-## Project Structure Overview
+## 1. Project Structure Overview
 
 The project is divided into several logical directories to separate raw data, processing scripts, core source code, and training outputs.
 
@@ -37,7 +37,7 @@ root:
 
 `trainDataProcessing.py / testDataProcessing.py`: Scripts to prepare the raw data.
 
-## Folder & File Details
+## 2. Folder & File Details
 
 `src/` (Core Logic)
 
@@ -57,7 +57,7 @@ The src directory contains the reusable modules that define the deep learning pi
 
 `visualize.py`: Provides functions to generate accuracy/loss plots with 95% confidence intervals and bar charts to identify which pig posture classes are most frequently misclassified.
 
-### Data Preparation
+## 3. Data Preparation
 
 These scripts ensure that the model focuses only on the relevant subject by cropping the raw images.
 
@@ -89,8 +89,14 @@ Execution Entry Points
 | Hardware         | H100 with Google Clab                                  |
 
 
-
-### 1. Learning Curves
+## 4. Summary
+* Epoch 76/100 with Patience = 10: Train Loss: 0.1703, Acc: 0.9395, Val Loss:
+0.3544, Acc: 0.9122
+* Best Validation Performance: Loss 0.2812, Acc 0.9241 (Epoch 66).
+* Training Time: 45m 42.57s
+* Final Submission Score on Kaggle: 0.851
+* 
+### 4. Learning Curves
 The plots below illustrate the changes in Loss and Accuracy over the training epochs.
 
 The blue shaded area represents a 95% confidence interval estimate for the true accuracy.
@@ -99,7 +105,7 @@ The green dots indicate the performance at the best epoch before early stopping 
 
 ![Training Result Plot](data/outputs//training_result_plot.png)
 
-### 2. Error Analysis (by Class)
+### 3. Error Analysis (by Class)
 The following bar chart displays the distribution of Correct vs. Wrong predictions for each of the 5 pig posture classes within the validation set.
 
 Green Bars: Total number of correctly identified instances per class.
@@ -107,3 +113,4 @@ Green Bars: Total number of correctly identified instances per class.
 Red Bars: Total number of misclassified instances per class.
 
 ![Validation Error Analysis](data/outputs/validation_correct_wrong.png)
+

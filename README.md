@@ -1,4 +1,4 @@
-# Pig Posture Classification Source Code Organization
+# Pig Posture Classification Source Code
 This document outlines the project structure and provides a high-level overview of the implementation for the Pig Posture Classification project. The model correctly classified approximately 85% of the test images on approximately 30% of the test data. The final results will be based on the other 70%, so the final standings may be different.
 
 
